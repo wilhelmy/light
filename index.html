@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Light : GNU/Linux application to control backlights" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Light</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/haikarainen/light">View on GitHub</a>
+
+          <h1 id="project_title">Light</h1>
+          <h2 id="project_tagline">GNU/Linux application to control backlights</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/haikarainen/light/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/haikarainen/light/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="light" class="anchor" href="#light"><span class="octicon octicon-link"></span></a>Light</h1>
+
+<p>Copyright (C) 2012 - 2014, Fredrik Haikarainen
+This is free software, see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE</p>
+
+<h2>
+<a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>"Light"  is  a program  to control backlight controllers  under GNU/Linux,
+it is the successor of lightscript, which was a bash script with the  same
+purpose, and tries to maintain the same functionality.</p>
+
+<h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Works excellent where other software has been proven to be unusable or problematic, thanks to how it operates internally and to the fact that it does not rely on xorg.</li>
+<li>Can automatically figure out the best controller to use, making full use of underlying hardware drivers.</li>
+<li>Possibility to set a minimum brightness value, as some controllers set the screen to be pitch black at a vaĺue of 0 (or higher).</li>
+</ul><h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a name="arch-linux" class="anchor" href="#arch-linux"><span class="octicon octicon-link"></span></a>Arch Linux</h3>
+
+<p>If you run Arch Linux, there is a package in the AUR called light.</p>
+
+<h3>
+<a name="debianubuntumint" class="anchor" href="#debianubuntumint"><span class="octicon octicon-link"></span></a>Debian/Ubuntu/Mint</h3>
+
+<p>A .deb is on the way</p>
+
+<h3>
+<a name="manual" class="anchor" href="#manual"><span class="octicon octicon-link"></span></a>Manual</h3>
+
+<p><code>make &amp;&amp; make install</code></p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>This application usually has 4 different criteria on flags to use, which are operation modes, value mode, target and controller mode. Flags from these different modes can never be used in conjunction, but all of them do not always have to be specified (although it is recommended to do so for verbosity).</p>
+
+<p><strong>Note:</strong> This application will only print errors if you are using it incorrectly. If something goes wrong, and you can't figure out why, try setting the verbosity flag with -v:</p>
+
+<ul>
+<li>0: No debug output</li>
+<li>1: Errors</li>
+<li>2: Errors, warnings</li>
+<li>3: Errors, warnings, notices</li>
+</ul><h3>
+<a name="operation-modes" class="anchor" href="#operation-modes"><span class="octicon octicon-link"></span></a>Operation modes</h3>
+
+<p>The operation modes describe <strong>what</strong> you want to do.</p>
+
+<ul>
+<li>-G: Which <strong>reads/gets</strong> brightness/data from controllers/files</li>
+<li>-S: Which <strong>writes/sets</strong> brightness/data to controllers/files</li>
+<li>-A: Which does like -S but instead <strong>adds</strong> the value</li>
+<li>-U: Which does like -S but instead '<strong>subtracts</strong> the value</li>
+<li>-O: Save the current brightness for later use (usually used on shutdown)</li>
+<li>-I: Restore the previously saved brightness (usually used on boot)</li>
+<li>-L: List the available controllers</li>
+</ul><p>When used by themselves operate on the brightness of a controller that is selected automatically. S, A and U needs another argument -- except for the main 4 criteria -- which is the value to set/add/subtract.   This can be specified either in percent or in raw values, but remember to specify the value mode (read below) if you want to write raw values.</p>
+
+<h3>
+<a name="value-modes" class="anchor" href="#value-modes"><span class="octicon octicon-link"></span></a>Value modes</h3>
+
+<p>The value mode specify in what unit you want to read or write values in. The default one (if not specified) is in percent, the other one is raw mode and should always be used when you need very precise values (or only have a controller with a very small amount of brightness levels).</p>
+
+<ul>
+<li>-p: Percent</li>
+<li>-r: Raw mode</li>
+</ul><p>Remember, this is the unit that will be used when you set, get, add or subtract brightness values.</p>
+
+<h3>
+<a name="target" class="anchor" href="#target"><span class="octicon octicon-link"></span></a>Target</h3>
+
+<p>As you can not only handle the <strong>brightness</strong> of controllers, you may also specify a target to read/write from/to:</p>
+
+<ul>
+<li>-b: Current brightness of selected controller</li>
+<li>-m: Maximum brightness of selected controller</li>
+<li>-c: Minimum brightness (cap) of selected controller</li>
+</ul><p>The minimum brightness is a feature implemented as some controllers make the screen go pitch black at 0%, if you have a controller like that, it is recommended to set this value (in either percent or in raw mode). These values will be saved in raw mode though, so if you specify it in percent it might not be too accurate depending on your controller.</p>
+
+<h3>
+<a name="controller-modes" class="anchor" href="#controller-modes"><span class="octicon octicon-link"></span></a>Controller modes</h3>
+
+<p>Finally, you can either use the built-in controller selection to get the controller with the maximum precision, or you can specify one manually with the -s flag. The -a flag will force automatic mode and is default. Use -L to get a list of controllers to use with the -s flag (to specify which controller to use).</p>
+
+<h3>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
+
+<p>Get the current brightness in percent</p>
+
+<p><code>light -G</code></p>
+
+<p>Increase brightness by 5 percent</p>
+
+<p><code>light -A 5</code></p>
+
+<p>Set the minimum cap to 2 in raw value on the acpi_video0 controller:</p>
+
+<p><code>light -Scrs "acpi_video0" 2</code></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Light maintained by <a href="https://github.com/haikarainen">haikarainen</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
